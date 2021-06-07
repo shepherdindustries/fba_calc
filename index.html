@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>FBA Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="assets/plugins/bootstrap/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="assets/plugins/bootstrap/bootstrap.bundle.min.js"></script>
+    <script src="assets/plugins/jquery/jquery.min.js"></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/favicon/site.webmanifest">
+
+    <title>FBA Calculator</title>
+</head>
+
+<body>
+
+<div id="data-loader" class="loader">
+    <div id="fba-progress-bar" class="fba-progress-bar">0%</div>
+</div>
+<!-- Main Header Part Start -->
+<div class="container main_header">
+    <div class="row">
+            <div class="col-11 col-md-10 mx-auto search common-padding center p-4 mb-3">
+                <form id="asinForm" class="row g-2">
+                    <div class="col-10 col-md-10 mx-auto common-padding d-flex flex-row p-4 mb-3 searchBar ">
+                        <div class="col-auto me-2 w-100">
+                            <input type="text" class="form-control" id="asinNumber" name="asinNumber"
+                                   placeholder="Enter Amazon Product URL or ASIN" required>
+                            <label for="asinNmber" class="form-label text-center mt-2">Eg: B0721GGGS9,
+                                B07H7JFCVH</label>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" name="submit" id="submit" class="btn btn-primary mb-3">Submit</button>
+                        </div>
+
+                    </div>
+                </form>
+                <div id="formError">
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<!-- Main Header Part End -->
+<!-- Calculation Upper Portion Start -->
+<div id="product-data" class="card border-bottom container mt-2">
+    <div class="container cal_profit_upper mt-2">
+        <h2 id="productCode">Product Details:<b></b></h2>
+
+        <div class=" row">
+            <div id="productImg" class="picturePart col-md-2">
+                <!-- <img src="./assets/cable.jpg" class="pic" /> -->
+                <hr>
+            </div>
+
+            <div class="MerchantDiv col-md-10 d-flex flex-column">
+                <h5 id="Ptitle"></h5>
+                <h5 id="Pdescription">Classic Controller Extension Cable, 2-Pack 3M/10 ft Super NES Classic Extension
+                    Power Cord for Nintendo
+                    Super NES Classic Edition (2017) and Mini NES Classic Edition Controller (2016)…</h5><br>
+                <div class="container">
+                    <div class="row">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>BRAND</th>
+                                <th>ASIN</th>
+                                <th>Product Dimensions</th>
+                                <th>Unit Weight</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="brand"></td>
+                                <td id="ASIN"></td>
+                                <td id="dimension"></td>
+                                <td id="weight"></td>
+
+                            </tr>
+
+                            <thead>
+                            <tr>
+                                <th>RATING</th>
+                                <th>TOTAL RATING</th>
+                                <th>MANUFACTURER</th>
+                                <th>RELEASE DATE</th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td id="raing"></td>
+                                <td id="tRating"></td>
+                                <td id="manu"></td>
+                                <td id="rDate"></td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+    <!-- Calculation Upper Portion End -->
+
+    <!--     Table below Header Part Start-->
+    <!--    <table class="col-md-8 container">-->
+    <!--        <thead>-->
+    <!--        <tr>-->
+    <!--            <th></th>-->
+    <!--            <th>Merchant fulfillment</th>-->
+    <!--            <th>Amazon fulfillment</th>-->
+    <!--        </tr>-->
+    <!--        </thead>-->
+    <!--        <tbody id="myTable">-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p style="color: purple;">Revenue</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1"></td>-->
+    <!--            <td class="td2"></td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p>Items Price</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1"><input type="text" value="7.9"></td>-->
+    <!--            <td class="td2"><input type="text" value="7.9"></td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p>Shipping</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1">$ <input type="text"></td>-->
+    <!--            <td class="td2">-</td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p>Total Revenue</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1">7.9</td>-->
+    <!--            <td class="td2">7.9</td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p style="color: purple;">Fullfillment Cost</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1"></td>-->
+    <!--            <td class="td2"></td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p>Seller Fullfilment Cost</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1"><input type="text" value="0"></td>-->
+    <!--            <td class="td2">NA</td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p>Fullfillment by Amazon Fees</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1">NA</td>-->
+    <!--            <td class="td2">3.32</td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p>Ship To Amazon</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1">NA</td>-->
+    <!--            <td class="td2"><input type="text" value="0"></td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p>Total Fullfilment Cost</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1">-</td>-->
+    <!--            <td class="td2">4.52</td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p>Selling proceeds</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1">6.79</td>-->
+    <!--            <td class="td2">3.47</td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td">-->
+    <!--                <p>Cost Of Product</p>-->
+    <!--            </td>-->
+    <!--            <td class="td1"><input type="text" value="0"></td>-->
+    <!--            <td class="td2"><input type="text" value="0"></td>-->
+    <!--        </tr>-->
+    <!--        <tr>-->
+    <!--            <td class="fc_td"></td>-->
+
+    <!--            <td class="fc_td">-->
+    <!--                <button type="submit" class="btn btn-primary col-md-10 mb-3">Calculate FBA Profit</button>-->
+    <!--            </td>-->
+    <!--        </tr>-->
+    <!--        </tbody>-->
+    <!--    </table>-->
+
+    <hr/>
+    <h4 class="text-center fba-calculator-heading">
+        Amazon FBA Cost Calculator
+    </h4>
+    <hr/>
+    <form id="fba-calculator-form">
+
+        <div class="container">
+            <div class="fba-field-row row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fba-avg-count-orders">Number of Orders/Month</label>
+                        <input class="form-control"
+                               min="0" step="any"
+                               name="countorders" placeholder=""
+                               type="number" class="form-control"
+                               id="fba-avg-count-orders"
+                               required="required"
+                        />
+                        <br/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fba-avg-count-units">Average Number of Items Per Order</label>
+                        <input class="form-control"
+                               min="0" step="any"
+                               name="avgCountUnits" placeholder=""
+                               type="number" class="form-control"
+                               id="fba-avg-count-units"
+                               required="required"
+                        />
+                        <br/>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fba-avg-weight">Average Item Weight(Pounds)</label>
+                        <input class="form-control"
+                               name="avgWeight" placeholder=""
+                               step="any"
+                               type="number" class="form-control"
+                               id="fba-avg-weight"
+                               required="required"
+                        />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="fba-field-row row">
+                <h5>
+                    Average Item Dimensions (inches)
+                </h5>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fba-length">
+                            Length
+                        </label>
+                        <input class="form-control"
+                               min="0"
+                               step="any" name="length"
+                               placeholder="" type="number"
+                               class="form-control"
+                               id="fba-length"
+                               required="required"
+                        />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fba-width">
+                            Width
+                        </label>
+                        <input class="form-control"
+                               min="0"
+                               step="any" name="width"
+                               placeholder="" type="number"
+                               class="form-control"
+                               id="fba-width"
+                               required="required"
+                        />
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="fba-height">
+                            Height
+                        </label>
+                        <input class="form-control"
+                               min="0"
+                               step="any" name="height"
+                               placeholder="" type="number"
+                               class="form-control"
+                               id="fba-height"
+                               required="required"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="fba-field-row row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fba-avg-production-cost">Average Production Cost Per Item($)</label>
+                        <input class="form-control"
+                               min="0" step="any"
+                               name="avgProductionCost" placeholder=""
+                               type="number" class="form-control"
+                               id="fba-avg-production-cost"
+                               required="required"
+                        />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="fba-avg-price">Average Sale Price per Item($)</label>
+                        <input class="form-control"
+                               min="0" step="any"
+                               name="avgPrice" placeholder=""
+                               type="number" class="form-control"
+                               id="fba-avg-price"
+                               required="required"
+                        />
+                    </div>
+                </div>
+            </div>
+            <hr/>
+            <div class="fba-field-row text-center">
+                <input type="submit" class="btn btn-primary" name="submit" value="Calculate My Profits"/>
+            </div>
+            <hr/>
+
+
+        </div>
+    </form>
+    <!-- Table, below Header Part End-->
+    <!-- calculated Profit start -->
+    <div class="container cal_profit mt-2">
+        <h2 id="fbaProfitAsin">Calculated FBA Profits: <b></b></h2>
+        <div>
+            <div class=" row">
+                <div class="picturePart col-md-3">
+                    <div id="productImg2">
+                    </div>
+                </div>
+                <div class="fba-results col-md-9 d-flex flex-column">
+                    <div class="row">
+                        <h2>Revenue</h2><br>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Order Revenue</th>
+                                        <td>$<span id="fba-result-order-revenue"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Seller Fees</th>
+                                        <td>$<span id="fba-result-seller-fee"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Net Revenue</th>
+                                        <td>$<span id="fba-result-net-revenue"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h2>Costs</h2><br>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Production Cost</th>
+                                        <td>$<span id="fba-result-production-cost"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Fulfillment Cost</th>
+                                        <td>$<span id="fba-result-fulfillment-cost"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Storage</th>
+                                        <td>$<span id="fba-result-storage"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-4 col-sm-12">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Fulfillment</th>
+                                        <td>$<span id="fba-result-fulfillment"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Monthly Platform Cost</th>
+                                        <td>$<span id="fba-result-monthly-platform-cost"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-4 col-sm-12">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <th>Total Cost</th>
+                                        <td>$<span id="fba-result-total-cost"></span></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="MerchantDiv ">
+                        <div class="row">
+                            <h2>Profit</h2><br>
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <th>Profit Margin</th>
+                                            <td><span id="fba-result-profit-margin"></span>%</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <th>Total Profit</th>
+                                            <td>$<span id="fba-result-total-profit"></span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- calculated Profit End -->
+    <!-- Getting data from json file using jquery and ajax start -->
+    <script src="assets/js/custom.js?v=2.3"></script>
+    <script src="assets/js/calculator.js"></script>
+    <!-- Getting data from json file using jquery and ajax end -->
+
+</body>
+
+</html>
