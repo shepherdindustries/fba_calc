@@ -91,7 +91,6 @@ function loadAPIProductData(asinNumber) {
             if (error.responseJSON && error.responseJSON.request_info && error.responseJSON.request_info.message) {
                 $('#formError').css("display", "block");
                 errorMessage += error.responseJSON.request_info.message;
-                console.log(error.responseJSON.request_info.message);
             }
 
             errorMessage += '</div>';
@@ -122,8 +121,8 @@ function loadProductData(product) {
     $("#productImg2").html('<img class="fba-product-image" alt="' + product.asin + '" src="' + mainImg + '" >');
 
     $("#Ptitle").html("<strong>Product Title:</strong> " + (product.title || "No title found."));
-    product.description = product.description.replace('PRODUCT DESCRIPTION', '');
     $("#Pdescription").html("<strong>Product Description:</strong> " + (product.description || "No description found."));
+    $("#pweight").html(product.weight);
     
     $("#brand").html(product.brand);
     $("#ASIN").html(product.asin);
@@ -147,47 +146,40 @@ function fillFormData(product) {
         var dimensions = dimensionsObj.value,
             dimensionsArr = dimensions.split(';');
         $("#dimension").html(dimensionsArr[0]);
-        $("#weight").html(dimensionsArr[1]);
 
-        dimensions = dimensionsArr[0].replace(' inches', '');
-
-        dimensions = dimensions.split(' x ');
-        var height = dimensions[0],
+        dimensions = dimensionsArr[0].replace('inches', '').str.replace(/\s/g, '');
+        dimensions = dimensions.split('x');
+        var length = dimensions[0],
             width = dimensions[1],
-            length = dimensions[2],
-            weight = dimensionsArr[1].replace(' Pounds', '');
-        weight = weight.replace(' ', '');
-
+            height = dimensions[2];
         $(fbaCalculator.formFields.averageItemWeight).val(weight);
         $(fbaCalculator.formFields.width).val(width);
         $(fbaCalculator.formFields.height).val(height);
         $(fbaCalculator.formFields.length).val(length);
 
-    } else if (dimensionsObj = product.specifications.find(elem => elem.name == 'Package Dimensions')) {
+    }  else if (dimensionsObj = product.specifications.find(elem => elem.name == 'Package Dimensions')) {
         var dimensions = dimensionsObj.value,
             dimensionsArr = dimensions.split(';');
         $("#dimension").html(dimensionsArr[0]);
 
-        dimensions = dimensionsArr[0].replace(' inches', '');
-        dimensions = dimensions.split(' x ');
-        var height = dimensions[0],
+        dimensions = dimensionsArr[0].replace('inches', '').replace(/\s/g, '').replace('\u200E', '');
+        dimensions = dimensions.split('x');
+        var length = dimensions[0];
             width = dimensions[1],
-            length = dimensions[2];
+            height = dimensions[2],
+            
 
+        $(fbaCalculator.formFields.length).val(length);
         $(fbaCalculator.formFields.width).val(width);
         $(fbaCalculator.formFields.height).val(height);
-        $(fbaCalculator.formFields.length).val(length);
+        
         var weightObj = product.specifications.find(elem => elem.name == 'Item Weight');
-        if (weightObj) {
-
-            var weight = weightObj.value;
-            $("#weight").html(weight);
-            weight = weight.replace(' ounces', '');
-            weight = weight * 0.0625;
-            $("#weight").html(weight + ' Pounds');
+        var weightasnumber = product.weight.replace('\u200E', '').replace('pounds', '').replace('pounds', '').trim();
+        if (!product.weight.includes('pounds'))  {
+            weight = product.weight.replace('ounces', '') * 0.0625;
             $(fbaCalculator.formFields.averageItemWeight).val(weight);
         } else {
-            $(fbaCalculator.formFields.averageItemWeight).val('');
+            $(fbaCalculator.formFields.averageItemWeight).val(weightasnumber);
         }
     } else {
         $(fbaCalculator.formFields.averageItemWeight).val('');
