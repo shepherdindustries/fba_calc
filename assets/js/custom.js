@@ -74,7 +74,7 @@ function loadAPIProductData(asinNumber) {
                 $('#formError').html(errorMessage);
 
                 $('#formError').css("display", "block");
-                $("#.container.cal_profit_upper").css("display", "none");
+                $("#product-data").css("display", "none");
                 
                 stopProgressBar();
             }
@@ -95,7 +95,7 @@ function loadAPIProductData(asinNumber) {
 
             errorMessage += '</div>';
             $('#formError').html(errorMessage);
-            $("#container.cal_profit_upper").css("display", "none");
+            $("#product-data").css("display", "none");
             stopProgressBar();
 
         }
@@ -107,7 +107,7 @@ function loadJSONProductData() {
     $.getJSON("assets/json/product.json", function (data) {
         loadProductData(data);
         setTimeout(function () {
-            $("#container.cal_profit_upper").css("display", "block");
+            $("#product-data").css("display", "block");
             stopProgressBar();
         }, 1000);
 
@@ -136,7 +136,7 @@ function loadProductData(product) {
 
     fillFormData(product);
     $("#formError").css("display", "none");
-    $("#container.cal_profit_upper").css("display", "block");
+    $("#product-data").css("display", "block");
     stopProgressBar();
 }
 
@@ -225,4 +225,3 @@ function startProgressBarInterval() {
 
     }, 1000);
 }
-
