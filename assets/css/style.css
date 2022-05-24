@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Muli', sans-serif;
+    font-family: 'poppins', sans-serif;
 }
 
 .searchBar {
@@ -81,7 +81,7 @@
     position: relative;
     margin: 200px auto;
     text-align: center;
-    font-family: 'roboto', sans-serif;
+    font-family: 'poppins';
     width: 80%;
 }
 
